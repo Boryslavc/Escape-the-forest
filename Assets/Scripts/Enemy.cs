@@ -14,31 +14,36 @@ public class Enemy : MonoBehaviour
     private ObjectThrower thrower;
     private const string EndOfGameB = "EndOfGameB";
 
-
+    private void OnDisable()
+    {
+        SessionManager.Instance.OnGameOver -= FinishTask;
+    }
+    // session manager instance initialization takes place in awake,
+    // so need to subscribe in start
+    // not another awake
     private void Start()
     {
+        SessionManager.Instance.OnGameOver += FinishTask;
         enemyAnimator = GetComponent<Animator>();
         thrower = GetComponent<ObjectThrower>();
     }
 
     private void StartShooting()
     {
-        InvokeRepeating(nameof(ThrowRock), 1f, 2f);
+        InvokeRepeating(nameof(ThrowRock), 3.5f, 1.2f);
     }
     private void ThrowRock()
     {
         thrower.Throw();
     }
 
-    public void StopShooting()
+    private void StopShooting()
     {
         CancelInvoke(nameof(ThrowRock));
-        enemyAnimator.SetBool(nameof(EndOfGameB), true);
     }
     
     public void StartIntro()
     {
-        enemyAnimator.SetBool(nameof(EndOfGameB), false);
         StartCoroutine(PlayIntro());
     }
     private IEnumerator PlayIntro()
@@ -61,5 +66,10 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
         StartShooting();
+    }
+    public void FinishTask()
+    {
+        StopShooting();
+        enemyAnimator.SetBool(nameof(EndOfGameB), true);
     }
 }

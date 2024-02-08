@@ -6,14 +6,22 @@ public class Spawner : MonoBehaviour
 
     public static Spawner Instance;
 
-    private void Awake()
+    private void OnDisable()
+    {
+        SessionManager.Instance.OnGameOver -= FinishTask;
+    }
+
+    private void OnEnable()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
     }
-
+    private void Start()
+    {
+        SessionManager.Instance.OnGameOver += FinishTask;
+    }
     public Rock SpawnRock()
     {
         var rock = ObjectPooler.Instance.GetRock();
@@ -25,7 +33,7 @@ public class Spawner : MonoBehaviour
     {
         InvokeRepeating(nameof(SpawnFeather), 3f, 8f);
     }
-    public void StopSpawningFeathers()
+    private void StopSpawningFeathers()
     {
         CancelInvoke(nameof(SpawnFeather));
     }
@@ -47,5 +55,10 @@ public class Spawner : MonoBehaviour
         else if (height == 1)
             return 1;
         else return 2;
+    }
+
+    public void FinishTask()
+    {
+        StopSpawningFeathers();
     }
 }

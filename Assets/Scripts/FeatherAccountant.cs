@@ -1,29 +1,21 @@
 using UnityEngine;
-using TMPro;
 using System;
 
 
 public class FeatherAccountant : MonoBehaviour
 {
     [SerializeField] private const int featherMaxCount = 4;
+    [SerializeField] private FeathersDisplay feathersDisplay;
 
-    public event Action OnFeatherZero;
+    public event Action OnFeathersEqualsZero;
 
     public FlySimulator FlySimulator;
-    public TMP_Text FeatherDisplay;
-    public float TimeToMoveToLoseFeather { get; private set; } = 3f;
+
+    public float TimeToMoveToLoseFeather { get; private set; } = 4f;
 
     private int featherCurrentCount = 4;
 
-    private void Update()
-    {
-        DisplayFeather();
-    }
 
-    private void DisplayFeather()
-    {
-        FeatherDisplay.text = featherCurrentCount.ToString();
-    }
     public int GetFeatherCount()
     {
         return featherCurrentCount;
@@ -37,17 +29,17 @@ public class FeatherAccountant : MonoBehaviour
                 return;
             else
             {
-                UpdateFeatherCount(1);
+                ChangeFeatherCountBy(1);
                 collision.gameObject.SetActive(false);
                 FlySimulator.RaiseFlyHeight(featherCurrentCount - 1);
             }
         }
     }
-    public void UpdateFeatherCount(int amountToAdd)
+    public void ChangeFeatherCountBy(int amountToAdd)
     {
         featherCurrentCount += amountToAdd;
-        Debug.Log(featherCurrentCount.ToString());
+        feathersDisplay.DisplayCurrentImage(amountToAdd == 1 ? true : false) ;
         if (featherCurrentCount == 0)
-             OnFeatherZero?.Invoke();
+             OnFeathersEqualsZero?.Invoke();
     }
 }

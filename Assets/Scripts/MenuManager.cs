@@ -5,17 +5,20 @@ using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public TMP_Text bestScoreText;
+    public TMP_Text BestScoreText;
 
     private void Start()
     {
-        // can it be called before GameManager called LoadInfo method, prob should change the logic
-        int sc = GameManager.Instance.BestScore;
-        bestScoreText.text = "Best Score:" + sc;
+        int score = GameManager.Instance.BestScore;
+        BestScoreText.text = "Best Score:" + score;
     }
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+    public void LoadTutorialScene()
+    {
+        SceneManager.LoadScene(2);
     }
     public void QuitGame()
     {

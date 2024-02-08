@@ -14,12 +14,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if(Instance == null)
         {
-            Destroy(gameObject);
+            Instance = this;
             return;
         }
-        Instance = this;
+        else
+        {
+            Destroy(gameObject);
+        }
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
@@ -57,10 +60,9 @@ public class GameManager : MonoBehaviour
         //called just once per session so it's fine
         SessionManager sessionManager = GameObject.FindObjectOfType<SessionManager>();
 
-        if (sessionManager != null && sessionManager.score > BestScore)
+        if (sessionManager != null && sessionManager.FinalScore > BestScore)
         {
-            BestScore = sessionManager.score;
-            Debug.Log("best score saved");
+            BestScore = sessionManager.FinalScore;
         }
 
         SceneManager.LoadScene(0);

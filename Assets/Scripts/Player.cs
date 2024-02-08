@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float LerpSpeed = 2f;
     [SerializeField] private FeatherAccountant featherAccountant;
+    [SerializeField] private ParticleSystem flyingEffect;
+    [SerializeField] private ParticleSystem getHitEffect;
 
     public event UnityAction OnPlayerDied;
 
@@ -18,27 +20,29 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        featherAccountant.OnFeatherZero += OnDie;
-    }
-    private void Start()
-    {
+        featherAccountant.OnFeathersEqualsZero += OnDie;
         playerAnimator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if(other.gameObject.CompareTag("Arrow")) 
-        {
-            OnDie();
-        }
+        flyingEffect.Play();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Arrow"))
+        {
+            getHitEffect.Play();
+            featherAccountant.ChangeFeatherCountBy(-1);
+        }
+    }
     public void OnDie()
     {
         playerAnimator.SetBool(EndOfGameB, true);
         rigidbody2D.gravityScale = 1;
         OnPlayerDied?.Invoke();
+        flyingEffect.Stop();
     }
     public void StartIntro()
     {
@@ -68,6 +72,6 @@ public class Player : MonoBehaviour
     }
     private void OnDestroy()
     {
-        featherAccountant.OnFeatherZero -= OnDie;
+        featherAccountant.OnFeathersEqualsZero -= OnDie;
     }
 }

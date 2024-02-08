@@ -1,13 +1,13 @@
-using UnityEditor;
 using UnityEngine;
 using DG.Tweening;
 
 public class FlySimulator : MonoBehaviour
 {
-    [SerializeField] private float[] FlyingHeits = {-4f, 0, 5.45f,12};
-    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float[] FlyingHeits = {-4f, 0, 5.45f, 12};
+    [SerializeField] private float movementSpeed = 12f;
     [SerializeField] FeatherAccountant featherAccountant;
-    //[SerializeField] private BoxCollider2D ceiling;
+    [SerializeField] private Player player;
+    [SerializeField] private ParticleSystem fallingEffect;
 
     // probably better to update fields, than to create new variables each call
     private float xDir = 0;
@@ -18,9 +18,6 @@ public class FlySimulator : MonoBehaviour
     private const string horizontalAxis = "Horizontal";
     private const string verticalAxis = "Vertical";
 
-    //private float startMoveTime = 0;
-    //private float endMoveTime = 0;
-
     private float toDescendInterval;
     private float timeSpendMoving = 0f;
 
@@ -29,6 +26,7 @@ public class FlySimulator : MonoBehaviour
     private void Start()
     {
         toDescendInterval = featherAccountant.TimeToMoveToLoseFeather;
+        maxHeight = FlyingHeits[3];
     }
     private void Update()
     {
@@ -38,14 +36,27 @@ public class FlySimulator : MonoBehaviour
 
         LowerFlyHeight();
     }
+
     private void Move()
     {
+        Vector3 moveDir;
+
+        yDir = SpecifyYDir();
+
         xDir = Input.GetAxis(horizontalAxis);
-        yDir = Input.GetAxis(verticalAxis);
-
-        Vector3 moveDir = new Vector3(xDir, yDir) * movementSpeed;
-
+        moveDir = new Vector3(xDir, yDir) * movementSpeed;
         transform.Translate(moveDir * Time.deltaTime);
+    }
+
+    private float SpecifyYDir()
+    {
+        float inputValue = Input.GetAxis(verticalAxis);
+        if (transform.position.y < maxHeight)
+            return inputValue;
+        else if(Mathf.Abs(transform.position.y - maxHeight) < 0.05f && inputValue <= 0)
+            return inputValue;
+        else
+            return 0f;
     }
     private void CheckInputDuration()
     {
@@ -55,31 +66,27 @@ public class FlySimulator : MonoBehaviour
         {
             timeSpendMoving += Time.deltaTime;
         }
-        //if(!isCurrentlyMoving && moveIsHappening)
-        //    startMoveTime = Time.time;
-        //else if(isCurrentlyMoving && !moveIsHappening)
-        //    endMoveTime = Time.time;
-
-        //float duration = endMoveTime - startMoveTime;
-        //isCurrentlyMoving = moveIsHappening;
     }
     private void LowerFlyHeight()
     {
         if (timeSpendMoving >= toDescendInterval)
         {
-            featherAccountant.UpdateFeatherCount(-1);
+            timeSpendMoving = 0;
+            featherAccountant.ChangeFeatherCountBy(-1);
             int currentMaxHeight = featherAccountant.GetFeatherCount() - 1;
+            if (currentMaxHeight < 0)
+                return;
             maxHeight = FlyingHeits[currentMaxHeight];
             if (transform.position.y > maxHeight)
-                transform.DOMoveY(maxHeight, 0.5f);            
-            timeSpendMoving = 0;
-            Debug.Log("lowerd to " +  maxHeight);
+            {
+                transform.DOMoveY(maxHeight, 0.5f);
+                fallingEffect.Play();
+            }
         }
     }
     public void RaiseFlyHeight(int currentMaxHeight)
     {
         maxHeight = FlyingHeits[currentMaxHeight];
         timeSpendMoving = 0;
-        Debug.Log("Height raised to " +  maxHeight);
     }
 }

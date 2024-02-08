@@ -1,34 +1,27 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SessionManager : MonoBehaviour
 {
     public static SessionManager Instance;
 
-    [SerializeField] private float scoreMultiplier = 1f;
-    [SerializeField] private float timer;
-    [SerializeField] private bool gameIsOn = false;
-
-    public Background background;
-    public Spawner spawner;
+    public Timer Timer;
     public Enemy enemy;
     public Player playerController;
     public AudioSource BackGroundMusic;
 
-    public TMP_Text scoreText;
-    public TMP_Text finalScore;
-    public int score { get; private set; }
+    public TMP_Text finalScoreText;
+
+    public event UnityAction OnGameOver;
 
     public GameObject pauseMenu;
     public GameObject loseMenu;
 
     private bool isPaused = false;
 
-    private void OnEnable()
-    {
-        playerController.OnPlayerDied += EndSession;
-    }
+    public int FinalScore { get; private set; }
 
     private void Awake()
     {
@@ -36,7 +29,9 @@ public class SessionManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+        playerController.OnPlayerDied += EndSession;
     }
+
     public void Start()
     {
         StartSession();
@@ -45,43 +40,23 @@ public class SessionManager : MonoBehaviour
 
     private void Update()
     {
-        if (gameIsOn)
-        {
-            timer += Time.deltaTime;
-            if (timer > 3)
-            {
-                // prob should make an progressional incrementation of scoreMultiplier
-                // but nobody is gonna play it that long
-                if (score > 120)
-                    scoreMultiplier = 2f;
-                score += (int)(3 * scoreMultiplier);
-                scoreText.text = "Score: " + score;
-                timer = 0;
-            }
-        }
-
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame();
         }
     }
+    public void Restart()
+    {
+        SceneManager.LoadScene(1);
+    }
     public void StartSession()
     {
-        // separate UI logic
-        score = 0;
-        scoreText.text = "Score: 0";
-        loseMenu.SetActive(false);
-
         playerController.gameObject.transform.position = playerController.PlayerSpawnPoint.position;
         enemy.gameObject.transform.position = enemy.SpawnPoint.position;
 
         playerController.StartIntro();
         enemy.StartIntro();
         Spawner.Instance.StartSpawningFeathers();
-        
-        background.shouldRoll = true;
-        gameIsOn = true;
     }
     public void PauseGame()
     {
@@ -100,23 +75,23 @@ public class SessionManager : MonoBehaviour
     }
     private void EndSession()
     {
-        background.shouldRoll = false;
-
-        enemy.StopShooting();
+        OnGameOver?.Invoke();
 
         loseMenu.SetActive(true);
-        finalScore.text = "Score:" + score;
+    
+        FinalScore = Timer.Score;
+        finalScoreText.text = "Your result: " + FinalScore;
 
-        Spawner.Instance.StopSpawningFeathers();
-
+        CheckAndSaveBestScore();
+    }
+    private void CheckAndSaveBestScore()
+    {
         int bestScore = GameManager.Instance.BestScore;
-        if (score > bestScore)
+        if (FinalScore > bestScore)
         {
-            GameManager.Instance.SetBestScore(score);
+            GameManager.Instance.SetBestScore(FinalScore);
             Debug.Log("Best score set");
         }
-        Debug.Log("game is on false");
-        gameIsOn = false;
     }
     public void LoadMainMenu()
     {

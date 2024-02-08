@@ -18,7 +18,6 @@ public class ObjectThrower : MonoBehaviour
         var rock = Spawner.Instance.SpawnRock();
         rock.gameObject.transform.position = transform.position + spawnOffset;
         Vector3 throwDir = (target.transform.position - transform.position).normalized;
-        Debug.Log(throwDir);
         rock.SetMoveDirection(throwDir);
         throwEffect.Play();
     }
