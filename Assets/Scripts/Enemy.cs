@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public Player Player;
 
     private Animator enemyAnimator;
-    private ObjectThrower thrower;
+    private RockThrower thrower;
     private const string EndOfGameB = "EndOfGameB";
 
     private void OnDisable()
@@ -25,21 +25,16 @@ public class Enemy : MonoBehaviour
     {
         SessionManager.Instance.OnGameOver += FinishTask;
         enemyAnimator = GetComponent<Animator>();
-        thrower = GetComponent<ObjectThrower>();
+        thrower = GetComponent<RockThrower>();
     }
 
     private void StartShooting()
     {
-        InvokeRepeating(nameof(ThrowRock), 3.5f, 1.2f);
+        thrower.StartThrowing();
     }
-    private void ThrowRock()
-    {
-        thrower.Throw();
-    }
-
     private void StopShooting()
     {
-        CancelInvoke(nameof(ThrowRock));
+        thrower.StopThrowing();
     }
     
     public void StartIntro()

@@ -3,8 +3,12 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private float[] feathersSpawnHeight = new float[] { 5, 0, -4f };
+    [SerializeField] private GameObject treePreafb;
+    [SerializeField] private Vector3 treeSpawnPosition;
 
     public static Spawner Instance;
+
+    private const float probabilityToSpawnTree = 0.7f;
 
     private void OnDisable()
     {
@@ -28,14 +32,30 @@ public class Spawner : MonoBehaviour
         rock.gameObject.SetActive(true);
         return rock;
     }
-
-    public void StartSpawningFeathers()
+    private void SpawnTree()
     {
+        if(ShouldSpawnTree())
+        {
+            var tree = ObjectPooler.Instance.GetTree();
+            tree.SetActive(true);
+            tree.transform.position = treeSpawnPosition;
+        }
+    }
+    private bool ShouldSpawnTree()
+    {
+        float chance = Random.value;
+        return chance < probabilityToSpawnTree;
+
+    }
+    public void StartSpawning()
+    {
+        InvokeRepeating(nameof(SpawnTree), 5f, 5f);
         InvokeRepeating(nameof(SpawnFeather), 3f, 8f);
     }
-    private void StopSpawningFeathers()
+    private void StopSpawning()
     {
         CancelInvoke(nameof(SpawnFeather));
+        CancelInvoke(nameof(SpawnTree));
     }
     private void SpawnFeather()
     {
@@ -59,6 +79,6 @@ public class Spawner : MonoBehaviour
 
     public void FinishTask()
     {
-        StopSpawningFeathers();
+        StopSpawning();
     }
 }

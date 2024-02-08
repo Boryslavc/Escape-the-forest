@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1097743498959048424}
   - component: {fileID: 2085139703499813636}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hexagon Flat-Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1058654385894062351}
   - component: {fileID: 8937669915081905813}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hexagon Flat-Top (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,9 +180,9 @@ GameObject:
   - component: {fileID: 1607219646893445154}
   - component: {fileID: -3245290240892120358}
   - component: {fileID: 3912722994246556042}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rock
-  m_TagString: Arrow
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be83bbf6aa4defb4394e432f29d7ad4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  moveSpeed: 40
 --- !u!50 &-3245290240892120358
 Rigidbody2D:
   serializedVersion: 4

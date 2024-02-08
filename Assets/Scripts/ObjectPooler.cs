@@ -8,9 +8,11 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private int poolSize = 20;
     [SerializeField] private Rock rockPrefab;
     [SerializeField] private Feather featherPrefab;
+    [SerializeField] private GameObject treePrefab;
 
     private List<Rock> rocksPool = new List<Rock>();
     private List<Feather> featherPool = new List<Feather>();
+    private List<GameObject> treePool = new List<GameObject>();
 
     private void Awake()
     {
@@ -38,6 +40,12 @@ public class ObjectPooler : MonoBehaviour
             feather.gameObject.SetActive(false);
             featherPool.Add(feather);
         }
+        for(int j = 0; j < poolSize; j++)
+        {
+            var tree = Instantiate(treePrefab);
+            tree.gameObject.SetActive(false);
+            treePool.Add(tree);
+        }
     }
 
     public Rock GetRock()
@@ -56,6 +64,15 @@ public class ObjectPooler : MonoBehaviour
         {
             if (!featherPool[i].gameObject.activeInHierarchy)
                 return featherPool[i];
+        }
+        return null;
+    }
+    public GameObject GetTree()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            if (!treePool[i].gameObject.activeInHierarchy)
+                return treePool[i];
         }
         return null;
     }

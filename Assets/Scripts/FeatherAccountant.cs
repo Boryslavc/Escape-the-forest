@@ -11,7 +11,7 @@ public class FeatherAccountant : MonoBehaviour
 
     public FlySimulator FlySimulator;
 
-    public float TimeToMoveToLoseFeather { get; private set; } = 4f;
+    public float TimeToMoveToLoseFeather { get; private set; } = 5f;
 
     private int featherCurrentCount = 4;
 

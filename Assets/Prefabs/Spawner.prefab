@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbaa5f19e1815340a6a978128466edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockOffset: {x: -14, y: -4.2, z: 1}
+  feathersSpawnHeight:
+  - 5
+  - 0
+  - -4
+  treePreafb: {fileID: 2100714316730019112, guid: 406249f26ff6ddc4394830478675fbeb, type: 3}
+  treeSpawnPosition: {x: 0, y: 0, z: 0}

@@ -56,7 +56,7 @@ public class SessionManager : MonoBehaviour
 
         playerController.StartIntro();
         enemy.StartIntro();
-        Spawner.Instance.StartSpawningFeathers();
+        Spawner.Instance.StartSpawning();
     }
     public void PauseGame()
     {

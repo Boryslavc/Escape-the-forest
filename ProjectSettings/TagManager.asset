@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Spikes
-  - Arrow
   - Enemy
   - Ground
   - Boost
   - Feather
+  - Rock
+  - Tree
   layers:
   - Default
   - TransparentFX
@@ -17,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Rock
+  - Tree
+  - Enemy
   - 
   - 
   - 

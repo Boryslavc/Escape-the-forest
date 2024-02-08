@@ -31,11 +31,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Arrow"))
+        if (IsHurtable(collision))
         {
             getHitEffect.Play();
             featherAccountant.ChangeFeatherCountBy(-1);
         }
+    }
+    private bool IsHurtable(Collider2D collidedWith)
+    {
+        return collidedWith.gameObject.CompareTag("Rock") || collidedWith.gameObject.CompareTag("Tree");
     }
     public void OnDie()
     {
