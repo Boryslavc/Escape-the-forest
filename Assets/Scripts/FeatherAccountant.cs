@@ -11,11 +11,12 @@ public class FeatherAccountant : MonoBehaviour
 
     public FlySimulator FlySimulator;
 
-    public float TimeToMoveToLoseFeather { get; private set; } = 5f;
+    private int featherCurrentCount;
 
-    private int featherCurrentCount = 4;
-
-
+    private void Start()
+    {
+        featherCurrentCount = featherMaxCount;
+    }
     public int GetFeatherCount()
     {
         return featherCurrentCount;
@@ -31,7 +32,7 @@ public class FeatherAccountant : MonoBehaviour
             {
                 ChangeFeatherCountBy(1);
                 collision.gameObject.SetActive(false);
-                FlySimulator.RaiseFlyHeight(featherCurrentCount - 1);
+                FlySimulator.RaiseFlyHeight(featherCurrentCount);
             }
         }
     }

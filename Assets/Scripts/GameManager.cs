@@ -29,19 +29,6 @@ public class GameManager : MonoBehaviour
     {
         LoadGameInfo();
     }
-
-    public void SaveGameInfo()
-    {
-        GameInfo dataTosafe = new GameInfo();
-        dataTosafe.bestScore = BestScore;
-
-        string jsonData = JsonUtility.ToJson(dataTosafe);
-        string path = Path.Combine(Application.persistentDataPath, "savefile.json");
-
-        File.WriteAllText(path, jsonData);
-        Debug.Log("Data saved");
-    }
-
     private void LoadGameInfo()
     {
         string path = Path.Combine(Application.persistentDataPath, "savefile.json");
@@ -53,8 +40,18 @@ public class GameManager : MonoBehaviour
 
             this.BestScore = gameInfo.bestScore;
         }
-        Debug.Log("Data loaded");
     }
+    public void SaveGameInfo()
+    {
+        GameInfo dataTosafe = new GameInfo();
+        dataTosafe.bestScore = BestScore;
+
+        string jsonData = JsonUtility.ToJson(dataTosafe);
+        string path = Path.Combine(Application.persistentDataPath, "savefile.json");
+
+        File.WriteAllText(path, jsonData);
+    }
+
     public void LoadMainMenu()
     {
         //called just once per session so it's fine

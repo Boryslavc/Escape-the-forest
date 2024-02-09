@@ -4919,7 +4919,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.88, y: 5.45, z: 0}
-  m_LocalScale: {x: 1, y: 0.75, z: 1.25}
+  m_LocalScale: {x: 0.8, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5839314497147816535}
@@ -5117,14 +5117,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FlyingHeits:
-  - -4
-  - 0
+  - -2.86
+  - 1.15
   - 5.45
   - 12
   movementSpeed: 12
   featherAccountant: {fileID: 2440462277246438393}
   player: {fileID: 3138304099971560089}
   fallingEffect: {fileID: 5325382115425183342}
+  SecondsToMoveToLoseFeather: 5
 --- !u!1 &4008463576210421341
 GameObject:
   m_ObjectHideFlags: 0

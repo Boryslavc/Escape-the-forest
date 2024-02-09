@@ -5,11 +5,11 @@ public class FlySimulator : MonoBehaviour
 {
     [SerializeField] private float[] FlyingHeits = {-4f, 0, 5.45f, 12};
     [SerializeField] private float movementSpeed = 12f;
-    [SerializeField] FeatherAccountant featherAccountant;
+    [SerializeField] private FeatherAccountant featherAccountant;
     [SerializeField] private Player player;
     [SerializeField] private ParticleSystem fallingEffect;
+    [SerializeField] private float SecondsToMoveToLoseFeather = 5f;
 
-    // probably better to update fields, than to create new variables each call
     private float xDir = 0;
     private float yDir = 0;
 
@@ -18,14 +18,11 @@ public class FlySimulator : MonoBehaviour
     private const string horizontalAxis = "Horizontal";
     private const string verticalAxis = "Vertical";
 
-    private float toDescendInterval;
     private float timeSpendMoving = 0f;
 
-    //private bool isCurrentlyMoving;
 
     private void Start()
     {
-        toDescendInterval = featherAccountant.TimeToMoveToLoseFeather;
         maxHeight = FlyingHeits[3];
     }
     private void Update()
@@ -34,7 +31,7 @@ public class FlySimulator : MonoBehaviour
 
         CheckInputDuration();
 
-        LowerFlyHeight();
+        TryToLowerFlyHeight();
     }
 
     private void Move()
@@ -53,7 +50,7 @@ public class FlySimulator : MonoBehaviour
         float inputValue = Input.GetAxis(verticalAxis);
         if (transform.position.y < maxHeight)
             return inputValue;
-        else if(Mathf.Abs(transform.position.y - maxHeight) < 0.05f && inputValue <= 0)
+        else if(Mathf.Abs(transform.position.y - maxHeight) < 0.1f && inputValue <= 0)
             return inputValue;
         else
             return 0f;
@@ -67,9 +64,9 @@ public class FlySimulator : MonoBehaviour
             timeSpendMoving += Time.deltaTime;
         }
     }
-    private void LowerFlyHeight()
+    private void TryToLowerFlyHeight()
     {
-        if (timeSpendMoving >= toDescendInterval)
+        if (timeSpendMoving >= SecondsToMoveToLoseFeather)
         {
             timeSpendMoving = 0;
             featherAccountant.ChangeFeatherCountBy(-1);
@@ -86,7 +83,7 @@ public class FlySimulator : MonoBehaviour
     }
     public void RaiseFlyHeight(int currentMaxHeight)
     {
-        maxHeight = FlyingHeits[currentMaxHeight];
+        maxHeight = FlyingHeits[currentMaxHeight - 1];
         timeSpendMoving = 0;
     }
 }

@@ -17983,14 +17983,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 195252453620187250, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: FlyingHeits.Array.data[0]
-      value: -2.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 195252453620187250, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: FlyingHeits.Array.data[1]
-      value: 1.15
-      objectReference: {fileID: 0}
     - target: {fileID: 2039759486591627402, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -18007,18 +17999,6 @@ PrefabInstance:
       propertyPath: PlayerSpawnPoint
       value: 
       objectReference: {fileID: 939447585}
-    - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.38
@@ -18058,10 +18038,6 @@ PrefabInstance:
     - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6063571097530712393, guid: 45b63b4b2e22c7a4aa8b4904038ecb8e, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

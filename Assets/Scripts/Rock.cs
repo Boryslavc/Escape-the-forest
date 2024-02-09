@@ -8,7 +8,6 @@ public class Rock : MonoBehaviour
         set
         {
             moveSpeed = value;
-            Debug.Log(moveSpeed);
         }
     }
     private Vector3 moveDirecion;

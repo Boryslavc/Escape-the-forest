@@ -13,14 +13,14 @@ public class FeathersDisplay : MonoBehaviour
         currentImage = featherImages.Length - 1;
     }
 
-    public void DisplayCurrentImage(bool toSetActive)
+    public void DisplayCurrentImage(bool shouldBeActive)
     {
-        if(toSetActive)
+        if(shouldBeActive)
         {
             currentImage += 1;
             featherImages[currentImage].gameObject.SetActive(true);
         }
-        else if(!toSetActive)
+        else if(!shouldBeActive)
         {
             featherImages[currentImage].gameObject.SetActive(false);
             currentImage += -1;

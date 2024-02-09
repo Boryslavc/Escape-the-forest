@@ -16,7 +16,7 @@ public class Feather : MonoBehaviour
         if (gameObject.activeSelf)
         {
             transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
-            if (gameObject.transform.position.x < -20)
+            if (gameObject.transform.position.x < -30)
             {
                 gameObject.SetActive(false);
             }

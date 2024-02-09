@@ -38,7 +38,6 @@ public class RockThrower : MonoBehaviour
     }
     private bool ShouldThrowHarder()
     {
-        Debug.Log((timer.Score % 20) < 4);
         return (timer.Score % 20) < 4 && throwTimeSpan > 1;             
     }
     public void ThrowHarder()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private float[] feathersSpawnHeight = new float[] { 5, 0, -4f };
+    [SerializeField] private float[] feathersSpawnHeights = new float[] { 5, 0, -4f };
     [SerializeField] private GameObject treePreafb;
     [SerializeField] private Vector3 treeSpawnPosition;
 
@@ -61,7 +61,7 @@ public class Spawner : MonoBehaviour
     {
         var feather = ObjectPooler.Instance.GetFeather();
         int height = SelectSpawnHeight();
-        Vector3 position = new Vector3(30, feathersSpawnHeight[height], 0);
+        Vector3 position = new Vector3(30, feathersSpawnHeights[height], 0);
         feather.gameObject.transform.position = position;
         feather.gameObject.SetActive(true);
     }
