@@ -11,6 +11,7 @@ public class FeathersDisplay : MonoBehaviour
     private void OnEnable()
     {
         currentImage = featherImages.Length - 1;
+        featherAccountant.OnFeathersAmountChangedAndWentUp += DisplayCurrentImage;
     }
 
     public void DisplayCurrentImage(bool shouldBeActive)
@@ -25,5 +26,9 @@ public class FeathersDisplay : MonoBehaviour
             featherImages[currentImage].gameObject.SetActive(false);
             currentImage += -1;
         }
+    }
+    private void OnDisable()
+    {
+        featherAccountant.OnFeathersAmountChangedAndWentUp -= DisplayCurrentImage;
     }
 }

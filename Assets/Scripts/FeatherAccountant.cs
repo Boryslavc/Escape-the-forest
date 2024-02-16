@@ -8,6 +8,7 @@ public class FeatherAccountant : MonoBehaviour
     [SerializeField] private FeathersDisplay feathersDisplay;
 
     public event Action OnFeathersEqualsZero;
+    public event Action<bool> OnFeathersAmountChangedAndWentUp;
 
     public FlySimulator FlySimulator;
 
@@ -32,14 +33,13 @@ public class FeatherAccountant : MonoBehaviour
             {
                 ChangeFeatherCountBy(1);
                 collision.gameObject.SetActive(false);
-                FlySimulator.RaiseFlyHeight(featherCurrentCount);
             }
         }
     }
     public void ChangeFeatherCountBy(int amountToAdd)
     {
         featherCurrentCount += amountToAdd;
-        feathersDisplay.DisplayCurrentImage(amountToAdd == 1 ? true : false) ;
+        OnFeathersAmountChangedAndWentUp?.Invoke(amountToAdd == 1 ? true : false) ;
         if (featherCurrentCount == 0)
              OnFeathersEqualsZero?.Invoke();
     }

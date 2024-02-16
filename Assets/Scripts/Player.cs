@@ -41,13 +41,6 @@ public class Player : MonoBehaviour
     {
         return collidedWith.gameObject.CompareTag("Rock") || collidedWith.gameObject.CompareTag("Tree");
     }
-    public void OnDie()
-    {
-        playerAnimator.SetBool(EndOfGameB, true);
-        rigidbody2D.gravityScale = 1;
-        OnPlayerDied?.Invoke();
-        flyingEffect.Stop();
-    }
     public void StartIntro()
     {
         rigidbody2D.gravityScale = 0;
@@ -73,6 +66,13 @@ public class Player : MonoBehaviour
                 fractionOfJourney);
             yield return null;
         }
+    }
+    public void OnDie()
+    {
+        playerAnimator.SetBool(EndOfGameB, true);
+        rigidbody2D.gravityScale = 1.5f;
+        OnPlayerDied?.Invoke();
+        flyingEffect.Stop();
     }
     private void OnDestroy()
     {
