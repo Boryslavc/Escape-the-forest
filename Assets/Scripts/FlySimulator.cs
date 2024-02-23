@@ -25,7 +25,7 @@ public class FlySimulator : MonoBehaviour
     private void Start()
     {
         maxHeight = FlyingHeits[FlyingHeits.Length - 1];
-        featherAccountant.OnFeathersAmountChangedAndWentUp += ChangeMaxFlyHeight;
+        featherAccountant.OnFeathersAmountChanged += ChangeMaxFlyHeight;
         SessionManager.Instance.OnGameOver += EndTask;
     }
     private void Update()
@@ -63,15 +63,11 @@ public class FlySimulator : MonoBehaviour
 
         if (timeSpendMoving >= SecondsToMoveToLoseFeather)
         {
-            //bad method call, contraddicts this method's meaning 
             featherAccountant.ChangeFeatherCountBy(-1);
-            // now i got a problem here, bool param doesnt do anything in this script
-            // but vital for feathers dispaly
-            // also it's not clear without intellisense what bool param should mean
-            ChangeMaxFlyHeight(false);
+            ChangeMaxFlyHeight();
         }
     }
-    private void ChangeMaxFlyHeight(bool toRaise)
+    private void ChangeMaxFlyHeight()
     {
         timeSpendMoving = 0;
         int currentMaxHeight = featherAccountant.GetFeatherCount() - 1;
@@ -97,6 +93,6 @@ public class FlySimulator : MonoBehaviour
     private void OnDisable()
     {
         SessionManager.Instance.OnGameOver -= EndTask;
-        featherAccountant.OnFeathersAmountChangedAndWentUp -= ChangeMaxFlyHeight;
+        featherAccountant.OnFeathersAmountChanged -= ChangeMaxFlyHeight;
     }
 }

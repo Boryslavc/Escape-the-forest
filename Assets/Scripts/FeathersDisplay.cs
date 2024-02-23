@@ -6,29 +6,33 @@ public class FeathersDisplay : MonoBehaviour
     [SerializeField] private FeatherAccountant featherAccountant;
 
     public Image[] featherImages = new Image[4];
-    private int currentImage;
+    private int currentImageNumber;
 
     private void OnEnable()
     {
-        currentImage = featherImages.Length - 1;
-        featherAccountant.OnFeathersAmountChangedAndWentUp += DisplayCurrentImage;
+        currentImageNumber = featherImages.Length - 1;
+        featherAccountant.OnFeathersAmountChanged += DisplayCurrentImage;
     }
-
-    public void DisplayCurrentImage(bool shouldBeActive)
+   // currentImage = arrayIndex, featherCount = amount of feathers
+   // currentImage should alway be one less than featherCount
+    public void DisplayCurrentImage()
     {
-        if(shouldBeActive)
+        int feathCount = featherAccountant.GetFeatherCount();
+        //player lost a feather
+        if (feathCount == currentImageNumber)
         {
-            currentImage += 1;
-            featherImages[currentImage].gameObject.SetActive(true);
+            featherImages[currentImageNumber].gameObject.SetActive(false);
+            currentImageNumber--;
         }
-        else if(!shouldBeActive)
+        //player obtained one feather
+        else if ((feathCount - currentImageNumber) == 2)
         {
-            featherImages[currentImage].gameObject.SetActive(false);
-            currentImage += -1;
+            currentImageNumber += 1;
+            featherImages[currentImageNumber].gameObject.SetActive(true);
         }
     }
     private void OnDisable()
     {
-        featherAccountant.OnFeathersAmountChangedAndWentUp -= DisplayCurrentImage;
+        featherAccountant.OnFeathersAmountChanged -= DisplayCurrentImage;
     }
 }

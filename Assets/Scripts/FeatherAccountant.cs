@@ -8,7 +8,7 @@ public class FeatherAccountant : MonoBehaviour
     [SerializeField] private FeathersDisplay feathersDisplay;
 
     public event Action OnFeathersEqualsZero;
-    public event Action<bool> OnFeathersAmountChangedAndWentUp;
+    public event Action OnFeathersAmountChanged;
 
     public FlySimulator FlySimulator;
 
@@ -39,7 +39,7 @@ public class FeatherAccountant : MonoBehaviour
     public void ChangeFeatherCountBy(int amountToAdd)
     {
         featherCurrentCount += amountToAdd;
-        OnFeathersAmountChangedAndWentUp?.Invoke(amountToAdd == 1 ? true : false) ;
+        OnFeathersAmountChanged?.Invoke() ;
         if (featherCurrentCount == 0)
              OnFeathersEqualsZero?.Invoke();
     }

@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     {
         if (IsHurtable(collision))
         {
+            //after game over might collide with tree on the way down
+            if(featherAccountant.GetFeatherCount() == 0) { return; }
             getHitEffect.Play();
             featherAccountant.ChangeFeatherCountBy(-1);
         }
