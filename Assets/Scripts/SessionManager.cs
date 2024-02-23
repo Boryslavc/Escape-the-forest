@@ -7,17 +7,15 @@ public class SessionManager : MonoBehaviour
 {
     public static SessionManager Instance;
 
-    public Timer Timer;
-    public Enemy enemy;
-    public Player playerController;
-    public AudioSource BackGroundMusic;
+    [SerializeField] private Timer Timer;
+    [SerializeField] private Player playerController;
+    [SerializeField] private AudioSource BackGroundMusic;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject loseMenu;
 
     public TMP_Text finalScoreText;
-
+    public event UnityAction OnGameStarted;
     public event UnityAction OnGameOver;
-
-    public GameObject pauseMenu;
-    public GameObject loseMenu;
 
     private bool isPaused = false;
 
@@ -51,27 +49,18 @@ public class SessionManager : MonoBehaviour
     }
     public void StartSession()
     {
-        playerController.gameObject.transform.position = playerController.PlayerSpawnPoint.position;
-        enemy.gameObject.transform.position = enemy.SpawnPoint.position;
-
-        playerController.StartIntro();
-        enemy.StartIntro();
-        Spawner.Instance.StartSpawning();
+        OnGameStarted?.Invoke();
     }
+
     public void PauseGame()
     {
         if (isPaused)
-        {
             Time.timeScale = 1f;
-            pauseMenu.SetActive(false);
-            isPaused = false;
-        }
         else
-        {
             Time.timeScale = 0f;
-            pauseMenu.SetActive(true);
-            isPaused = true;
-        }
+
+        pauseMenu.SetActive(!isPaused);
+        isPaused = !isPaused;
     }
     private void EndSession()
     {
@@ -90,7 +79,6 @@ public class SessionManager : MonoBehaviour
         if (FinalScore > bestScore)
         {
             GameManager.Instance.SetBestScore(FinalScore);
-            Debug.Log("Best score set");
         }
     }
     public void LoadMainMenu()

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private float timer;
-    [SerializeField] private bool gameIsOn;
-
     public TMP_Text scoreText;
     public int Score { get; private set; }
+
+    private float timer;
+    private bool gameIsOn;
 
     // session manager instance initialization takes place in awake,
     // so need to subscribe in start

@@ -48,24 +48,11 @@ public class FlySimulator : MonoBehaviour
     {
         float inputValue = Input.GetAxis(verticalAxis);
 
-        //no delay
         if (isAtMaxYValue && inputValue > 0)
             return 0;
         else if (isAtMaxYValue && inputValue <= 0)
             return inputValue;
         else return inputValue;
-
-
-
-        // works but there's a delay if player is at highest Y levels
-        // caused by DoMove
-        //if (transform.position.y > maxHeight)
-        //{
-        //    transform.DOMoveY(maxHeight - 0.2f, 0.3f);
-        //    return 0;
-        //}
-        //else 
-        //    return inputValue;
     }
     private void CheckInputDuration()
     {
@@ -80,7 +67,8 @@ public class FlySimulator : MonoBehaviour
             featherAccountant.ChangeFeatherCountBy(-1);
             // now i got a problem here, bool param doesnt do anything in this script
             // but vital for feathers dispaly
-            ChangeMaxFlyHeight(true);
+            // also it's not clear without intellisense what bool param should mean
+            ChangeMaxFlyHeight(false);
         }
     }
     private void ChangeMaxFlyHeight(bool toRaise)
@@ -102,24 +90,6 @@ public class FlySimulator : MonoBehaviour
         if (isLongFall)
             fallingEffect.Play();
     }
-    // difference with raise method in one command
-    // porly combine in one method (what to do with bool param from event then?
-
-    //private void LowerMaxFlyHeight()
-    //{
-    //    timeSpendMoving = 0;
-    //    featherAccountant.ChangeFeatherCountBy(-1);
-    //    int currentMaxHeight = featherAccountant.GetFeatherCount() - 1;
-    //    if (currentMaxHeight < 0)
-    //        return;
-    //    maxHeight = FlyingHeits[currentMaxHeight];
-    //}
-    //public void RaiseFlyHeight()
-    //{
-    //    int currentMaxHeight = featherAccountant.GetFeatherCount() - 1;
-    //    maxHeight = FlyingHeits[currentMaxHeight];
-    //    timeSpendMoving = 0;
-    //}
     private void EndTask()
     {
         GetComponent<FlySimulator>().enabled = false;
@@ -127,5 +97,6 @@ public class FlySimulator : MonoBehaviour
     private void OnDisable()
     {
         SessionManager.Instance.OnGameOver -= EndTask;
+        featherAccountant.OnFeathersAmountChangedAndWentUp -= ChangeMaxFlyHeight;
     }
 }

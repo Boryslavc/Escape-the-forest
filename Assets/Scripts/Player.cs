@@ -5,10 +5,8 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float LerpSpeed = 2f;
-    [SerializeField] private FeatherAccountant featherAccountant;
-    [SerializeField] private ParticleSystem flyingEffect;
     [SerializeField] private ParticleSystem getHitEffect;
-
+    [SerializeField] private ParticleSystem flyingEffect;
     public event UnityAction OnPlayerDied;
 
     public Transform PlayerSpawnPoint;
@@ -17,12 +15,15 @@ public class Player : MonoBehaviour
     private const string EndOfGameB = "EndOfGameB";
     private Animator playerAnimator;
     private Rigidbody2D rigidbody2D;
+    private FeatherAccountant featherAccountant;
 
     private void Awake()
     {
+        featherAccountant = GetComponent<FeatherAccountant>();
         featherAccountant.OnFeathersEqualsZero += OnDie;
         playerAnimator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        SessionManager.Instance.OnGameStarted += StartIntro;
     }
     private void Start()
     {
@@ -43,8 +44,8 @@ public class Player : MonoBehaviour
     }
     public void StartIntro()
     {
+        transform.position = PlayerSpawnPoint.position;
         rigidbody2D.gravityScale = 0;
-        playerAnimator.SetBool(nameof(EndOfGameB), false);
         StartCoroutine(PlayIntro());
     }
     private IEnumerator PlayIntro()
@@ -77,5 +78,6 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         featherAccountant.OnFeathersEqualsZero -= OnDie;
+        SessionManager.Instance.OnGameStarted -= StartIntro;
     }
 }

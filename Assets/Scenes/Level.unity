@@ -12012,17 +12012,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141042767}
   m_CullTransparentMesh: 1
---- !u!114 &1157384350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6236025566953160999, guid: 1076ca37689851f40a7a8bda5f8d23bd, type: 3}
-  m_PrefabInstance: {fileID: 2291310929754031690}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c12cd898a485dd43a1ad10ce0833c28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1230133555
 GameObject:
   m_ObjectHideFlags: 0
@@ -12786,8 +12775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b24ebce8b2fb84eb7e6c953141425c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0
-  gameIsOn: 0
   scoreText: {fileID: 1911688697}
 --- !u!1 &1957715357
 GameObject:
@@ -17781,12 +17768,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timer: {fileID: 1911688699}
-  enemy: {fileID: 1157384350}
   playerController: {fileID: 5410751124034442827}
   BackGroundMusic: {fileID: 1478174147}
-  finalScoreText: {fileID: 791202020}
   pauseMenu: {fileID: 1366655687}
   loseMenu: {fileID: 347882856}
+  finalScoreText: {fileID: 791202020}
 --- !u!4 &2089531931
 Transform:
   m_ObjectHideFlags: 0

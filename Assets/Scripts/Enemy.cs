@@ -4,25 +4,20 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float LerpSpeed = 2f;
+    [SerializeField] private Player Player;
 
     public Transform StartRunPoint;
     public Transform SpawnPoint;
 
-    public Player Player;
-
     private Animator enemyAnimator;
     private RockThrower thrower;
     private const string EndOfGameB = "EndOfGameB";
-
-    private void OnDisable()
-    {
-        SessionManager.Instance.OnGameOver -= FinishTask;
-    }
     // session manager instance initialization takes place in awake,
     // so need to subscribe in start
     // not another awake
     private void Start()
     {
+        SessionManager.Instance.OnGameStarted += StartIntro;
         SessionManager.Instance.OnGameOver += FinishTask;
         enemyAnimator = GetComponent<Animator>();
         thrower = GetComponent<RockThrower>();
@@ -39,6 +34,7 @@ public class Enemy : MonoBehaviour
     
     public void StartIntro()
     {
+        transform.position = SpawnPoint.position;
         StartCoroutine(PlayIntro());
     }
     private IEnumerator PlayIntro()
@@ -66,5 +62,10 @@ public class Enemy : MonoBehaviour
     {
         StopShooting();
         enemyAnimator.SetBool(nameof(EndOfGameB), true);
+    }
+    private void OnDisable()
+    {
+        SessionManager.Instance.OnGameOver -= FinishTask;
+        SessionManager.Instance.OnGameStarted -= StartIntro;
     }
 }

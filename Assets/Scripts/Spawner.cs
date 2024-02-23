@@ -10,10 +10,6 @@ public class Spawner : MonoBehaviour
 
     private const float probabilityToSpawnTree = 0.7f;
 
-    private void OnDisable()
-    {
-        SessionManager.Instance.OnGameOver -= FinishTask;
-    }
 
     private void OnEnable()
     {
@@ -24,6 +20,7 @@ public class Spawner : MonoBehaviour
     }
     private void Start()
     {
+        SessionManager.Instance.OnGameStarted += StartSpawning;
         SessionManager.Instance.OnGameOver += FinishTask;
     }
     public Rock SpawnRock()
@@ -80,5 +77,10 @@ public class Spawner : MonoBehaviour
     public void FinishTask()
     {
         StopSpawning();
+    }
+    private void OnDisable()
+    {
+        SessionManager.Instance.OnGameStarted -= StartSpawning;
+        SessionManager.Instance.OnGameOver -= FinishTask;
     }
 }
