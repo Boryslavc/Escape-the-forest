@@ -9,6 +9,7 @@ public class SessionManager : MonoBehaviour
 
     [SerializeField] private Timer Timer;
     [SerializeField] private Player playerController;
+    [SerializeField] private Enemy enemy;
     [SerializeField] private AudioSource BackGroundMusic;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject loseMenu;
@@ -32,6 +33,7 @@ public class SessionManager : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1;
         StartSession();
         BackGroundMusic.Play();
     }
@@ -45,11 +47,13 @@ public class SessionManager : MonoBehaviour
     }
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
     }
     public void StartSession()
     {
         OnGameStarted?.Invoke();
+        enemy.StartIntro();
     }
 
     public void PauseGame()

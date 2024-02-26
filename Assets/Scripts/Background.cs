@@ -7,21 +7,19 @@ public class Background : MonoBehaviour
     private bool shouldRoll;
 
     Material material;
-
-    private void OnDisable()
-    {
-        SessionManager.Instance.OnGameOver -= FinishTask;
-    }
     // session manager instance initialization takes place in awake,
     // so need to subscribe in start
     // not another awake
     private void Start()
     {
-        shouldRoll = true;
         material = GetComponent<MeshRenderer>().material;
         SessionManager.Instance.OnGameOver += FinishTask;
+        SessionManager.Instance.OnGameStarted += StartScrolling;
     }
-
+    private void StartScrolling()
+    {
+        shouldRoll = true;
+    }
     private void Update()
     {
         if(shouldRoll)
@@ -34,5 +32,10 @@ public class Background : MonoBehaviour
     public void FinishTask()
     {
         shouldRoll = false;
+    }
+    private void OnDisable()
+    {
+        SessionManager.Instance.OnGameStarted -= StartScrolling;
+        SessionManager.Instance.OnGameOver -= FinishTask;
     }
 }

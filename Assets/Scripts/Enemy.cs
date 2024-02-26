@@ -17,21 +17,10 @@ public class Enemy : MonoBehaviour
     // not another awake
     private void Start()
     {
-        SessionManager.Instance.OnGameStarted += StartIntro;
         SessionManager.Instance.OnGameOver += FinishTask;
         enemyAnimator = GetComponent<Animator>();
         thrower = GetComponent<RockThrower>();
-    }
-
-    private void StartShooting()
-    {
-        thrower.StartThrowing();
-    }
-    private void StopShooting()
-    {
-        thrower.StopThrowing();
-    }
-    
+    }    
     public void StartIntro()
     {
         transform.position = SpawnPoint.position;
@@ -56,16 +45,23 @@ public class Enemy : MonoBehaviour
                 fractionOfJourney);
             yield return null;
         }
-        StartShooting();
+        StartThrowing();
+    }
+        private void StartThrowing()
+    {
+        thrower.StartThrowing();
+    }
+    private void StopThrowing()
+    {
+        thrower.StopThrowing();
     }
     public void FinishTask()
     {
-        StopShooting();
+        StopThrowing();
         enemyAnimator.SetBool(nameof(EndOfGameB), true);
     }
     private void OnDisable()
     {
         SessionManager.Instance.OnGameOver -= FinishTask;
-        SessionManager.Instance.OnGameStarted -= StartIntro;
     }
 }

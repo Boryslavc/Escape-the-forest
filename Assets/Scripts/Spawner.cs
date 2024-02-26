@@ -23,12 +23,6 @@ public class Spawner : MonoBehaviour
         SessionManager.Instance.OnGameStarted += StartSpawning;
         SessionManager.Instance.OnGameOver += FinishTask;
     }
-    public Rock SpawnRock()
-    {
-        var rock = ObjectPooler.Instance.GetRock();
-        rock.gameObject.SetActive(true);
-        return rock;
-    }
     private void SpawnTree()
     {
         if(ShouldSpawnTree())
