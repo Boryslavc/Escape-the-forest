@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         SessionManager.Instance.OnGameOver += FinishTask;
+        SessionManager.Instance.OnGameStarted += StartIntro;
         enemyAnimator = GetComponent<Animator>();
         thrower = GetComponent<RockThrower>();
     }    
@@ -63,5 +64,6 @@ public class Enemy : MonoBehaviour
     private void OnDisable()
     {
         SessionManager.Instance.OnGameOver -= FinishTask;
+        SessionManager.Instance.OnGameStarted -= StartIntro;
     }
 }
