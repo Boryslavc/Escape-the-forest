@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    [SerializeField] private float rotatingSpeed = 1;
+    [SerializeField] private float RotatingSpeed = 1;
 
     private bool shouldRoll;
 
-    Material material;
+    private Material material;
     // session manager instance initialization takes place in awake,
     // so need to subscribe in start
     // not another awake
@@ -24,7 +24,7 @@ public class Background : MonoBehaviour
     {
         if(shouldRoll)
         {
-            Vector2 offset = new Vector2(rotatingSpeed * Time.deltaTime, 0);
+            Vector2 offset = new Vector2(RotatingSpeed * Time.deltaTime, 0);
             material.mainTextureOffset += offset;
         }
     }

@@ -53,6 +53,8 @@ public class SessionManager : MonoBehaviour
     public void StartSession()
     {
         OnGameStarted?.Invoke();
+
+        playerController.StartIntro();
     }
 
     public void PauseGame()

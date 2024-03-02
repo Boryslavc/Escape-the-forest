@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private float[] feathersSpawnHeights = new float[] { 5, 0, -4f };
-    [SerializeField] private GameObject treePreafb;
-    [SerializeField] private Vector3 treeSpawnPosition;
-
     public static Spawner Instance;
+
+    [SerializeField] private float[] FeathersSpawnHeights = new float[] { 5, 0, -4f };
+    [SerializeField] private GameObject TreePreafb;
+    [SerializeField] private Vector3 TreeSpawnPosition;
 
     private const float probabilityToSpawnTree = 0.7f;
 
@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
         {
             var tree = ObjectPooler.Instance.GetTree();
             tree.SetActive(true);
-            tree.transform.position = treeSpawnPosition;
+            tree.transform.position = TreeSpawnPosition;
         }
     }
     private bool ShouldSpawnTree()
@@ -52,7 +52,7 @@ public class Spawner : MonoBehaviour
     {
         var feather = ObjectPooler.Instance.GetFeather();
         int height = SelectSpawnHeight();
-        Vector3 position = new Vector3(30, feathersSpawnHeights[height], 0);
+        Vector3 position = new Vector3(30, FeathersSpawnHeights[height], 0);
         feather.gameObject.transform.position = position;
         feather.gameObject.SetActive(true);
     }
